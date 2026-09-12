@@ -39,7 +39,7 @@ function App() {
   // ADMIN ROUTES
   // =========================
 
-  if (route === "/admin") {
+  if (route === "/admin" || route === "/admin/login") {
     return (
       <AdminLogin
         onLogin={() => navigate("/admin/dashboard")}
@@ -48,7 +48,7 @@ function App() {
     );
   }
 
-  if (route === "/admin/dashboard") {
+  if (route === "/admin/dashboard" || route === "/dashboard") {
     return (
       <AdminDashboard
         onLogout={() => navigate("/admin")}

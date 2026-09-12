@@ -198,7 +198,7 @@
   bottom: 9px;
   width: 3px;
   border-radius: 3px;
-  background: #d6dd08;
+  background: #b28d32;
 }
 
 
@@ -662,12 +662,12 @@
 /* Approved - Golden Eagle */
 
 .status.approved {
-  background: #33db00;
-  color: #108e21;
+  background: #37e607;
+  color: #fdfdfd;
 }
 
 .status.approved i {
-  background: #1ac307;
+  background: #9a7720;
 }
 
 
@@ -679,7 +679,7 @@
 }
 
 .status.rejected i {
-  background: #bb0707;
+  background: #ef4444;
 }
 
 

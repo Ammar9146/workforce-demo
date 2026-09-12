@@ -1,14 +1,11 @@
 import { useState } from "react";
 import "./App.css";
 import logo from "./assets/golden-eagle-logo.jpg";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 
 import AdminLogin from "./dash/AdminLogin";
 import AdminDashboard from "./dash/AdminDashboard";
 
-// =========================
-// WORKER PORTAL COMPONENT
-// =========================
 function WorkerPortal() {
   const [page, setPage] = useState("login");
   const [requestStatus, setRequestStatus] = useState("none");
@@ -21,7 +18,6 @@ function WorkerPortal() {
 
   return (
     <div className="app">
-      {/* LOGIN */}
       {page === "login" && (
         <main className="login-page">
           <div className="login-brand">
@@ -47,7 +43,6 @@ function WorkerPortal() {
         </main>
       )}
 
-      {/* DASHBOARD */}
       {page === "dashboard" && (
         <main className="dashboard">
           <header className="dashboard-header">
@@ -168,7 +163,6 @@ function WorkerPortal() {
         </main>
       )}
 
-      {/* REQUEST PAGE */}
       {page === "request" && (
         <main className="request-page">
           <header className="simple-header">
@@ -202,7 +196,6 @@ function WorkerPortal() {
         </main>
       )}
 
-      {/* SUCCESS */}
       {page === "success" && (
         <main className="success-page">
           <div className="success-card">
@@ -224,9 +217,6 @@ function WorkerPortal() {
   );
 }
 
-// =========================
-// ADMIN WRAPPERS
-// =========================
 function AdminLoginWrapper() {
   const navigate = useNavigate();
   return <AdminLogin onLogin={() => navigate("/admin/dashboard")} onBack={() => navigate("/")} />;
@@ -237,18 +227,13 @@ function AdminDashboardWrapper() {
   return <AdminDashboard onLogout={() => navigate("/admin")} />;
 }
 
-// =========================
-// MAIN APP ROUTER
-// =========================
 export default function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<WorkerPortal />} />
         <Route path="/admin" element={<AdminLoginWrapper />} />
-        <Route path="/admin/login" element={<AdminLoginWrapper />} />
         <Route path="/admin/dashboard" element={<AdminDashboardWrapper />} />
-        <Route path="/dashboard" element={<AdminDashboardWrapper />} />
       </Routes>
     </Router>
   );

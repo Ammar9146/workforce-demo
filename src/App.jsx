@@ -1,10 +1,34 @@
 import { useState } from "react";
 import "./App.css";
 import logo from "./assets/golden-eagle-logo.jpg";
-import { HashRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 
 import AdminLogin from "./dash/AdminLogin";
 import AdminDashboard from "./dash/AdminDashboard";
+
+export default function App() {
+  // فحص مباشر لمسار الرابط الحالي
+  const path = window.location.pathname + window.location.hash;
+
+  // 1. إذا كان الرابط يحتوي على admin/dashboard يفتح الداشبورد مباشرة
+  if (path.includes("admin/dashboard") || path.includes("/dashboard")) {
+    return <AdminDashboard onLogout={() => (window.location.href = "/")} />;
+  }
+
+  // 2. إذا كان الرابط يحتوي على admin يفتح صفحة لوجن الأدمن
+  if (path.includes("admin")) {
+    return (
+      <AdminLogin
+        onLogin={() => (window.location.href = "/#/admin/dashboard")}
+        onBack={() => (window.location.href = "/")}
+      />
+    );
+  }
+
+  // =========================
+  // 3. أبلكيشن العمال (الافتراضي)
+  // =========================
+  return <WorkerPortal />;
+}
 
 function WorkerPortal() {
   const [page, setPage] = useState("login");
@@ -214,27 +238,5 @@ function WorkerPortal() {
         </main>
       )}
     </div>
-  );
-}
-
-function AdminLoginWrapper() {
-  const navigate = useNavigate();
-  return <AdminLogin onLogin={() => navigate("/admin/dashboard")} onBack={() => navigate("/")} />;
-}
-
-function AdminDashboardWrapper() {
-  const navigate = useNavigate();
-  return <AdminDashboard onLogout={() => navigate("/admin")} />;
-}
-
-export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<WorkerPortal />} />
-        <Route path="/admin" element={<AdminLoginWrapper />} />
-        <Route path="/admin/dashboard" element={<AdminDashboardWrapper />} />
-      </Routes>
-    </Router>
   );
 }

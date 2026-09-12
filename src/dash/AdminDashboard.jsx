@@ -1,24 +1,6 @@
 import { useState } from "react";
 import "./AdminDashboard.css";
 import logo from "../assets/golden-eagle-logo.jpg";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AdminLogin from './dash/AdminLogin';
-import AdminDashboard from './dash/AdminDashboard';
-
-function App() {
-  return (
-    <Router>
-      <Routes>
-        {/* الصفحات الرئيسية */}
-        <Route path="/" element={<AdminLogin />} />
-        
-        {/* رابط الداشبورد المخصص */}
-        <Route path="/admin" element={<AdminDashboard />} />
-        {/* أو يمكنك تسميته /dashboard */}
-      </Routes>
-    </Router>
-  );
-}
 
 
 const initialRequests = [

@@ -2,9 +2,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import "./App.css";
 import logo from "./assets/golden-eagle-logo.jpg";
-
-import AdminLogin from "./dash/AdminLogin";
-import AdminDashboard from "./dash/AdminDashboard";
+ import AdminLogin from "./AdminLogin";
 
 export default function App() {
   return (

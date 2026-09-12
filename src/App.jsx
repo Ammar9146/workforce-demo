@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import "./App.css";
 import logo from "./assets/golden-eagle-logo.jpg";
 
@@ -6,30 +7,46 @@ import AdminLogin from "./dash/AdminLogin";
 import AdminDashboard from "./dash/AdminDashboard";
 
 export default function App() {
-  // فحص مباشر لمسار الرابط الحالي
-  const path = window.location.pathname + window.location.hash;
+  return (
+    <Router>
+      <Routes>
+        {/* 1. رابط تطبيق العمال الرئيسي */}
+        <Route path="/" element={<WorkerPortal />} />
+        <Route path="/worker" element={<WorkerPortal />} />
 
-  // 1. إذا كان الرابط يحتوي على admin/dashboard يفتح الداشبورد مباشرة
-  if (path.includes("admin/dashboard") || path.includes("/dashboard")) {
-    return <AdminDashboard onLogout={() => (window.location.href = "/")} />;
-  }
+        {/* 2. رابط لوجن الأدمن */}
+        <Route path="/admin" element={<AdminLoginWrapper />} />
 
-  // 2. إذا كان الرابط يحتوي على admin يفتح صفحة لوجن الأدمن
-  if (path.includes("admin")) {
-    return (
-      <AdminLogin
-        onLogin={() => (window.location.href = "/#/admin/dashboard")}
-        onBack={() => (window.location.href = "/")}
-      />
-    );
-  }
+        {/* 3. رابط الداشبورد للأدمن */}
+        <Route path="/admin/dashboard" element={<AdminDashboardWrapper />} />
 
-  // =========================
-  // 3. أبلكيشن العمال (الافتراضي)
-  // =========================
-  return <WorkerPortal />;
+        {/* أي رابط خطأ يوجه للتطبيق */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
+  );
 }
 
+// Wrapper لصفحة اللوجن للتنقل بالـ Router
+function AdminLoginWrapper() {
+  const navigate = useNavigate();
+  return (
+    <AdminLogin
+      onLogin={() => navigate("/admin/dashboard")}
+      onBack={() => navigate("/")}
+    />
+  );
+}
+
+// Wrapper للداشبورد للتنقل بالـ Router
+function AdminDashboardWrapper() {
+  const navigate = useNavigate();
+  return <AdminDashboard onLogout={() => navigate("/admin")} />;
+}
+
+// =========================
+// تطبيق العمال (Worker Portal)
+// =========================
 function WorkerPortal() {
   const [page, setPage] = useState("login");
   const [requestStatus, setRequestStatus] = useState("none");
